@@ -17,6 +17,11 @@ jobs:
     steps:
       - id: fetch
         uses: oxidize-rb/actions/fetch-ci-data@v1
+        with:
+          supported-ruby-platforms: |
+            exclude: [arm-linux]
+          stable-ruby-versions: |
+            exclude: [head]
 
   build:
     name: Build native gems
