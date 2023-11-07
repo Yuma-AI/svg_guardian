@@ -48,6 +48,11 @@ jobs:
           platform: ${{ matrix.ruby-platform }}
           ruby-versions: ${{ join(fromJSON(needs.ci-data.outputs.result).stable-ruby-versions, ', ') }}
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: cross-gem
+          path: pkg/
+
   release:
     name: Release
     needs: build
