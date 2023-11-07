@@ -101,13 +101,14 @@ jobs:
             fi
           done
 
-      - name: Create GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          generateReleaseNotes: true
-          draft: true
-          omitBodyDuringUpdate: true
-          omitNameDuringUpdate: true
-          omitPrereleaseDuringUpdate: true
-          skipIfReleaseExists: true
+      # TODO: get back when gem is public
+      # - name: Create GitHub release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     allowUpdates: true
+      #     generateReleaseNotes: true
+      #     draft: true
+      #     omitBodyDuringUpdate: true
+      #     omitNameDuringUpdate: true
+      #     omitPrereleaseDuringUpdate: true
+      #     skipIfReleaseExists: true
