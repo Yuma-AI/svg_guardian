@@ -1,0 +1,103 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci-data:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.fetch.outputs.result }}
+    steps:
+      - id: fetch
+        uses: oxidize-rb/actions/fetch-ci-data@v1
+
+  build:
+    name: Build native gems
+    needs: ci-data
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-platform: ${{ fromJSON(needs.ci-data.outputs.result).supported-ruby-platforms }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: false
+          cargo-cache: true
+          cargo-vendor: true
+          cache-version: v1-${{ matrix.ruby-platform }}
+
+      - uses: oxidize-rb/cross-gem-action@main
+        with:
+          version: latest
+          platform: ${{ matrix.ruby-platform }}
+          ruby-versions: ${{ join(fromJSON(needs.ci-data.outputs.result).stable-ruby-versions, ', ') }}
+
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oxidize-rb/actions/setup-ruby-and-rust@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+          cargo-cache: true
+          cache-version: v1
+
+      - name: Ensure version matches the tag
+        run: |
+          GEM_VERSION=$(grep VERSION lib/svg_guardian/version.rb | head -n 1 | cut -d'"' -f2)
+          if [ "v$GEM_VERSION" != "${{ github.ref_name }}" ]; then
+            echo "Gem version does not match tag"
+            echo "  v$GEM_VERSION != ${{ github.ref_name }}"
+            exit 1
+          fi
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: cross-gem
+          path: pkg/
+
+      - name: Display structure of built gems
+        run: ls -R
+        working-directory: pkg/
+
+      - name: Release gem
+        if: startsWith(github.ref, 'refs/tags/v')
+        working-directory: pkg/
+        env:
+          RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
+          for i in *.gem; do
+            if [ -f "$i" ]
+            then
+              gem push "$i" || true
+            fi
+          done
+
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          generateReleaseNotes: true
+          draft: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          omitPrereleaseDuringUpdate: true
+          skipIfReleaseExists: true

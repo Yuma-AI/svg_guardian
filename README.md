@@ -1,24 +1,20 @@
 # SvgGuardian
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/svg_guardian`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Tiny wrapper around [svg-hush](https://github.com/cloudflare/svg-hush) to sanitize SVGs.
 
 ## Usage
 
-TODO: Write usage instructions here
+Add SvgGuardian to your `Gemfile`:
+
+```
+gem 'svg_guardian'
+```
+
+To sanitize SVG file call `#sanitize` method:
+
+```ruby
+SvgGuardian.sanitize("your svg file content")
+```
 
 ## Development
 
