@@ -2,6 +2,7 @@
 
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rb_sys/extensiontask"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -11,9 +12,9 @@ end
 
 require "standard/rake"
 
-require "rb_sys/extensiontask"
+spec = Bundler.load_gemspec("svg_guardian.gemspec")
 
-RbSys::ExtensionTask.new("svg_guardian") do |ext|
+RbSys::ExtensionTask.new("svg_guardian", spec) do |ext|
   ext.lib_dir = "lib/svg_guardian"
   ext.cross_compile = true
 end
