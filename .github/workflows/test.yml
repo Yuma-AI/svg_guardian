@@ -1,4 +1,4 @@
-name: Ruby
+name: Test
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         ruby:
-          - '3.2.2'
+          - '3.2.1'
 
     steps:
     - uses: actions/checkout@v3
@@ -25,5 +25,9 @@ jobs:
         bundler-cache: true
         cargo-cache: true
         rubygems: '3.4.10'
+    - name: Lint Ruby
+      run: bundle exec rake standard
+    - name: Lint Rust
+      run: cargo fmt --check
     - name: Run the default task
       run: bundle exec rake

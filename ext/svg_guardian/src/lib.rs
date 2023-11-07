@@ -1,6 +1,6 @@
 use magnus::{
-    exception::ExceptionClass, function, gc::register_mark_object, prelude::*,
-    value::Lazy, Error, RModule, Ruby,
+    exception::ExceptionClass, function, gc::register_mark_object, prelude::*, value::Lazy, Error,
+    RModule, Ruby,
 };
 use svg_hush::{data_url_filter, Filter};
 
