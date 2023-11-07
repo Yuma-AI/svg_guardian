@@ -13,13 +13,9 @@ require "standard/rake"
 
 require "rb_sys/extensiontask"
 
-desc "Build native extension for a given platform (i.e. `rake 'native[x86_64-linux]'`)"
-task :native, [:platform] do |_t, platform:|
-  sh "bundle", "exec", "rb-sys-dock", "--platform", platform, "--build"
-end
-
 RbSys::ExtensionTask.new("svg_guardian") do |ext|
   ext.lib_dir = "lib/svg_guardian"
+  ext.cross_compile = true
 end
 
 task build: :compile
