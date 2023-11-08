@@ -19,9 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.extensions = ["ext/svg_guardian/extconf.rb"]
 
-  spec.files = Dir["{lib,ext}/**/*", "LICENSE", "README.md", "Cargo.*"]
-  spec.files.reject! { |f| File.directory?(f) }
-  spec.files.reject! { |f| f =~ /\.(dll|so|dylib|lib|bundle)\Z/ }
+  spec.files = Dir["{lib}/**/*.{rb,yml}", "ext/**/*.{rs,toml,lock,rb,ttf}"] + %w[README.md LICENSE.txt Rakefile]
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]

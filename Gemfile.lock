@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    svg_guardian (0.0.2)
+    svg_guardian (0.0.3)
       rb_sys (>= 0.9.63)
 
 GEM
