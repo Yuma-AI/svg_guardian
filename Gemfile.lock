@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    svg_guardian (0.0.4)
-      rb_sys (>= 0.9.63)
+    svg_guardian (0.0.5)
+      rb_sys (>= 0.9.97)
 
 GEM
   remote: https://rubygems.org/
@@ -22,7 +22,7 @@ GEM
     rake (13.1.0)
     rake-compiler (1.2.5)
       rake
-    rb_sys (0.9.82)
+    rb_sys (0.9.97)
     regexp_parser (2.8.2)
     rexml (3.2.6)
     rubocop (1.56.4)
