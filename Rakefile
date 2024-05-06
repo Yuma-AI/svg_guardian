@@ -10,11 +10,6 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/test_*.rb"]
 end
 
-begin
-  require "standard/rake"
-rescue LoadError
-end
-
 spec = Bundler.load_gemspec("svg_guardian.gemspec")
 
 RbSys::ExtensionTask.new("svg_guardian", spec) do |ext|
@@ -23,4 +18,4 @@ RbSys::ExtensionTask.new("svg_guardian", spec) do |ext|
 end
 
 task build: :compile
-task default: %i[compile test standard]
+task default: %i[compile test]
