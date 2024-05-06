@@ -27,7 +27,7 @@ jobs:
         cargo-cache: true
         rubygems: '3.4.10'
     - name: Lint Ruby
-      run: bundle exec rake standard
+      run: bundle exec standardrb
     - name: Lint Rust
       run: cargo fmt --check
     - name: Run the default task
