@@ -47,13 +47,9 @@ jobs:
           platform: ${{ matrix.ruby-platform }}
           ruby-versions: ${{ join(fromJSON(needs.ci-data.outputs.result).stable-ruby-versions, ', ') }}
       
-      - name: Display structure of built gems
-        run: ls -R
-        working-directory: pkg/
-
       - uses: actions/upload-artifact@v4
         with:
-          name: cross-gem
+          name: cross-gem-result
           path: pkg/
 
   release:
@@ -80,7 +76,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: cross-gem
+          name: cross-gem-result
           path: pkg/
 
       - name: Display structure of built gems
