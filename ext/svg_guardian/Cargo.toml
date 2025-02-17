@@ -1,6 +1,6 @@
 [package]
 name = "svg_guardian"
-version = "0.0.4"
+version = "0.0.6"
 edition = "2021"
 authors = ["Alex Beznos <alex@yuma.ai>"]
 license = "MIT"
@@ -10,5 +10,5 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-magnus = { version = "0.6" }
+magnus = { version = "0.7" }
 svg-hush = { version = "0.9.4" }
