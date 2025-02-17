@@ -46,6 +46,10 @@ jobs:
         with:
           platform: ${{ matrix.ruby-platform }}
           ruby-versions: ${{ join(fromJSON(needs.ci-data.outputs.result).stable-ruby-versions, ', ') }}
+      
+      - name: Display structure of built gems
+        run: ls -R
+        working-directory: pkg/
 
       - uses: actions/upload-artifact@v4
         with:
