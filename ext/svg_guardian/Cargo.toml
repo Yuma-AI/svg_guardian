@@ -10,5 +10,5 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
-magnus = { version = "0.6" }
+magnus = { version = "0.7" }
 svg-hush = { version = "0.9.4" }
