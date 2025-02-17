@@ -49,7 +49,7 @@ jobs:
       
       - uses: actions/upload-artifact@v4
         with:
-          name: cross-gem-result
+          name: cross-gem-result-${{ matrix.ruby-platform }}
           path: pkg/
 
   release:
@@ -76,29 +76,29 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: cross-gem-result
+          name: cross-gem-result-*
           path: pkg/
 
       - name: Display structure of built gems
         run: ls -R
         working-directory: pkg/
 
-      - name: Release gem
-        if: startsWith(github.ref, 'refs/tags/v')
-        working-directory: pkg/
-        env:
-          RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
-          for i in *.gem; do
-            if [ -f "$i" ]
-            then
-              gem push "$i" || true
-            fi
-          done
+      # - name: Release gem
+      #   if: startsWith(github.ref, 'refs/tags/v')
+      #   working-directory: pkg/
+      #   env:
+      #     RUBYGEMS_API_KEY: ${{secrets.RUBYGEMS_API_KEY}}
+      #   run: |
+      #     mkdir -p $HOME/.gem
+      #     touch $HOME/.gem/credentials
+      #     chmod 0600 $HOME/.gem/credentials
+      #     printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
+      #     for i in *.gem; do
+      #       if [ -f "$i" ]
+      #       then
+      #         gem push "$i" || true
+      #       fi
+      #     done
 
       # TODO: get back when gem is public
       # - name: Create GitHub release
