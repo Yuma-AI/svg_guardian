@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     svg_guardian (0.0.6)
-      rb_sys (>= 0.9.97)
+      rb_sys (>= 0.9.110)
 
 GEM
   remote: https://rubygems.org/
