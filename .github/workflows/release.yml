@@ -42,7 +42,7 @@ jobs:
           cargo-vendor: true
           cache-version: v1-${{ matrix.ruby-platform }}
 
-      - uses: oxidize-rb/actions/cross-gem@v1
+      - uses: oxidize-rb/actions/cross-gem@v1.2.8
         with:
           platform: ${{ matrix.ruby-platform }}
           ruby-versions: ${{ join(fromJSON(needs.ci-data.outputs.result).stable-ruby-versions, ', ') }}
@@ -77,6 +77,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: cross-gem-result-*
+          merge-multiple: true
           path: pkg/
 
       - name: Display structure of built gems
